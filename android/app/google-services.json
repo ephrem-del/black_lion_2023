@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "128865352924",
+    "project_id": "blacklion-83bd5",
+    "storage_bucket": "blacklion-83bd5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128865352924:android:177fbdee1a9e3f17304819",
+        "android_client_info": {
+          "package_name": "com.demakk.black_lion_2023"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128865352924-lrkvsg51qibclebs295imfopfetgnb03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF8lg6ulfJ7Fz10jp_2lWVB_Hz-rZZcpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128865352924-lrkvsg51qibclebs295imfopfetgnb03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
