@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>128865352924-jvat0sgiucrvlu57ibd45k6bk3p26vrv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.128865352924-jvat0sgiucrvlu57ibd45k6bk3p26vrv</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>128865352924-3fgkiub91lpgp1q18ou764ohu4njrsp1.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDgMYq6QRCw3-aE47xm_3ORqv02xwcFHMI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>128865352924</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.demakk.blackLion2023</string>
+	<key>PROJECT_ID</key>
+	<string>blacklion-83bd5</string>
+	<key>STORAGE_BUCKET</key>
+	<string>blacklion-83bd5.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:128865352924:ios:37dec4a1b0a6a065304819</string>
+</dict>
+</plist>

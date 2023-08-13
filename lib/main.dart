@@ -3,8 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(GetMaterialApp(home: MyApp(),));
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(GetMaterialApp(
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,11 +26,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black87),
         useMaterial3: true,
-        primaryColor:Colors.black87,
-         
+        primaryColor: Colors.black87,
       ),
       home: const SplashScreen(),
     );
   }
 }
-

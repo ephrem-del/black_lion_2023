@@ -78,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         CustomTextField(
+                          controller: _model.phoneNumberController!,
                           title: 'Phone Number',
                           validate: (t) {
                             if (t == null || t == '') {
@@ -86,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                         CustomTextField(
+                          controller: _model.passwordController!,
                           title: 'Password',
                           validate: (t) {
                             if (t == null || t == '') {

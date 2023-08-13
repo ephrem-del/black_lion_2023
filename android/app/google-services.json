@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "128865352924-3fgkiub91lpgp1q18ou764ohu4njrsp1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.demakk.black_lion_2023",
+            "certificate_hash": "965759ac912b7f3edb82042634e0c9ee1428528d"
+          }
+        },
+        {
           "client_id": "128865352924-lrkvsg51qibclebs295imfopfetgnb03.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "128865352924-lrkvsg51qibclebs295imfopfetgnb03.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "128865352924-jvat0sgiucrvlu57ibd45k6bk3p26vrv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.demakk.blackLion2023"
+              }
             }
           ]
         }

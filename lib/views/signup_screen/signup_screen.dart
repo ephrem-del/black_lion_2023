@@ -31,19 +31,21 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   createAccount() async {
-    setState(() {
-      _model.loading = true;
-    });
-    final result = await _model.createAccount();
-    if (result) {
+    if (_model.signupFormKey.currentState!.validate()) {
       setState(() {
-        _model.loading = false;
+        _model.loading = true;
       });
-      Get.off(() => HomeScreen());
-    } else {
-      setState(() {
-        _model.loading = false;
-      });
+      final result = await _model.createAccount();
+      if (result) {
+        setState(() {
+          _model.loading = false;
+        });
+        Get.off(() => HomeScreen());
+      } else {
+        setState(() {
+          _model.loading = false;
+        });
+      }
     }
   }
 
@@ -71,21 +73,26 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: Column(
                       children: [
                         CustomTextField(
+                          controller: _model.phoneNumberController!,
                           title: 'Phone Number',
+                          number: true,
                           validate: (t) {
                             if (t == null || t == '') {
                               return 'Phone number is required';
+                            } else if (t.length != 9) {
+                              return 'phone number must be in 9******** format';
                             }
+                            return null;
                           },
                         ),
-                        CustomTextField(
-                          title: 'Password',
-                          validate: (t) {
-                            if (t == null || t == '') {
-                              return 'Password is required';
-                            }
-                          },
-                        ),
+                        // CustomTextField(
+                        //   title: 'Password',
+                        //   validate: (t) {
+                        //     if (t == null || t == '') {
+                        //       return 'Password is required';
+                        //     }
+                        //   },
+                        // ),
                         CustomButton(
                           title: 'Create Account',
                           onPressed: createAccount,
