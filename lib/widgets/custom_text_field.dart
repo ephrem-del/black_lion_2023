@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String title;
   final String? Function(String?)? validate;
-  final bool? number;
-  const CustomTextField({
-    super.key,
-    required this.title,
-    required this.validate,
-    required this.controller,
-    this.number
-  });
+  final bool? email;
+  const CustomTextField(
+      {super.key,
+      required this.title,
+      required this.validate,
+      required this.controller,
+      this.email});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -48,13 +46,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
               ),
               TextFormField(
-                keyboardType: widget.number != null && widget.number == true ? const TextInputType.numberWithOptions() : null,
-                inputFormatters: widget.number != null && widget.number == true ? [
-                  FilteringTextInputFormatter.digitsOnly,
-                ] : null,
+                keyboardType: widget.email == true ? TextInputType.emailAddress : null,
                 controller: widget.controller,
                 validator: widget.validate,
-              
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(

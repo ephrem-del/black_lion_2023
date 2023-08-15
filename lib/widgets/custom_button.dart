@@ -6,7 +6,10 @@ class CustomButton extends StatefulWidget {
   final bool loading;
   final Function onPressed;
   const CustomButton(
-      {super.key, required this.loading, required this.onPressed, required this.title});
+      {super.key,
+      required this.loading,
+      required this.onPressed,
+      required this.title});
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -25,11 +28,20 @@ class _CustomButtonState extends State<CustomButton> {
                 widget.onPressed();
               },
         style: ElevatedButton.styleFrom(backgroundColor: Colors.black54),
-        child: SizedBox(
-          child: Text(
-            widget.title,
-          ),
-        ),
+        child: widget.loading
+            ? Center(
+                child: SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: const CircularProgressIndicator(
+                  color: Colors.white,
+                              ),
+                ))
+            : Center(
+                child: Text(
+                  widget.title,
+                ),
+              ),
       ),
     );
   }

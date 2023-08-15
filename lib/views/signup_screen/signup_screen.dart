@@ -22,7 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     _model = SignupScreenModel();
     _model.passwordController = TextEditingController();
-    _model.phoneNumberController = TextEditingController();
+    _model.emailController = TextEditingController();
     super.initState();
   }
 
@@ -40,7 +40,7 @@ class _SignupScreenState extends State<SignupScreen> {
         setState(() {
           _model.loading = false;
         });
-        Get.off(() => HomeScreen());
+        Get.to(() => LoginScreen());
       } else {
         setState(() {
           _model.loading = false;
@@ -69,30 +69,31 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 20,
                   ),
+                  _model.errorText != '' ? Text(_model.errorText, style: TextStyle(color: Colors.red),) : SizedBox.shrink(),
                   BackgroundContainer(
                     child: Column(
                       children: [
                         CustomTextField(
-                          controller: _model.phoneNumberController!,
-                          title: 'Phone Number',
-                          number: true,
+                          controller: _model.emailController!,
+                          title: 'Email',
+                          email: true,
                           validate: (t) {
                             if (t == null || t == '') {
-                              return 'Phone number is required';
-                            } else if (t.length != 9) {
-                              return 'phone number must be in 9******** format';
+                              return 'Email is required';
                             }
                             return null;
                           },
                         ),
-                        // CustomTextField(
-                        //   title: 'Password',
-                        //   validate: (t) {
-                        //     if (t == null || t == '') {
-                        //       return 'Password is required';
-                        //     }
-                        //   },
-                        // ),
+                        CustomTextField(
+                          title: 'Password',
+                          validate: (t) {
+                            if (t == null || t == '') {
+                              return 'Password is required';
+                            }
+                            return null;
+                          },
+                          controller: _model.passwordController!,
+                        ),
                         CustomButton(
                           title: 'Create Account',
                           onPressed: createAccount,

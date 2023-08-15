@@ -1,8 +1,11 @@
 import 'package:black_lion_2023/service/image_service.dart';
 import 'package:black_lion_2023/views/login_screen/login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/students.dart';
 import 'home_screen/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,27 +27,43 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
-  isLoggedIn() {
-    final result = false;
-    if (result) {
-      navigateToHomeScreen();
-    } else {
+  isLoggedIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final isLoggedIn = prefs.getBool('isLoggedIn');
+    if (isLoggedIn == null || isLoggedIn == false) {
       navigateToLoginScreen();
+    } else {
+      final email = prefs.getString('email');
+      if (email == null) {
+        navigateToLoginScreen();
+      } else {
+        final student = await getStudent(email);
+        navigateToHomeScreen(student);
+      }
     }
   }
 
-  navigateToLoginScreen(){
-    Future.delayed(Duration(seconds: 3), () {
-      Get.to(
-        () => LoginScreen(),
-      );
-    });    
+  Future<Student> getStudent(String email) async {
+    final db = FirebaseFirestore.instance;
+    final result = await db.collection('students').doc(email).get();
+    final Student student = Student.fromMap(result);
+    return student;
   }
 
-  navigateToHomeScreen() {
+  navigateToLoginScreen() {
     Future.delayed(Duration(seconds: 3), () {
-      Get.to(
-        () => HomeScreen(),
+      Get.off(
+        () => LoginScreen(),
+      );
+    });
+  }
+
+  navigateToHomeScreen(Student student) {
+    Future.delayed(Duration(seconds: 3), () {
+      Get.off(
+        () => HomeScreen(
+          student: student,
+        ),
       );
     });
   }

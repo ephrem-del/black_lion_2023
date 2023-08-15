@@ -1,6 +1,7 @@
 import 'package:black_lion_2023/service/image_service.dart';
 import 'package:black_lion_2023/views/home_screen/home_screen.dart';
 import 'package:black_lion_2023/views/login_screen/login_screen_model.dart';
+import 'package:black_lion_2023/views/register_screen/register_screen.dart';
 import 'package:black_lion_2023/widgets/custom_button.dart';
 import 'package:black_lion_2023/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -22,31 +23,40 @@ class _LoginScreenState extends State<LoginScreen> {
   initState() {
     _model = LoginScreenModel();
     _model.passwordController = TextEditingController();
-    _model.phoneNumberController = TextEditingController();
+    _model.emailController = TextEditingController();
     super.initState();
   }
 
   @override
   dispose() {
     _model.passwordController!.dispose();
-    _model.phoneNumberController!.dispose();
+    _model.emailController!.dispose();
     super.dispose();
   }
 
   login() async {
-    setState(() {
-      _model.loading = true;
-    });
-    final result = await _model.login();
-    if (result) {
+    if (_model.loginFormKey.currentState!.validate()) {
       setState(() {
-        _model.loading = false;
+        _model.loading = true;
       });
-      Get.off(() => HomeScreen());
-    } else {
-      setState(() {
-        _model.loading = false;
-      });
+      final result = await _model.login();
+      if (result) {
+        final isRegistered = await _model.isStudentRegistered();
+        setState(() {
+          _model.loading = false;
+        });
+        if(isRegistered){
+        Get.off(() => HomeScreen(student: _model.student,));
+        } else {
+          Get.off(() => RegisterScreen(
+              email: _model.emailController!.text,
+            ));
+        }
+      } else {
+        setState(() {
+          _model.loading = false;
+        });
+      }
     }
   }
 
@@ -78,11 +88,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         CustomTextField(
-                          controller: _model.phoneNumberController!,
-                          title: 'Phone Number',
+                          controller: _model.emailController!,
+                          title: 'Email',
                           validate: (t) {
                             if (t == null || t == '') {
-                              return 'Phone number is required';
+                              return 'Email is required';
                             }
                           },
                         ),
