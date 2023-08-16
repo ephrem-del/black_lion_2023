@@ -1,5 +1,7 @@
 import 'package:black_lion_2023/views/home_screen/home_screen.dart';
 import 'package:black_lion_2023/views/update_screen/update_screen_model.dart';
+import 'package:black_lion_2023/widgets/background_container.dart';
+import 'package:black_lion_2023/widgets/background_image.dart';
 import 'package:black_lion_2023/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,27 +45,45 @@ class _UpdateScreenState extends State<UpdateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            DropdownMenu(
-              dropdownMenuEntries: _model.dates
-                  .map((day) => DropdownMenuEntry(
-                        label: day,
-                        value: day,
-                      ))
-                  .toList(),
-              onSelected: (value) {
-                setState(() {
-                  _model.selectedDate = value!;
-                });
-              },
-              initialSelection: _model.dates[widget.student.dateSelected - 1],
+      
+      body: Stack(
+        children: [
+          BackgroundImage(),
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: BackgroundContainer(
+                  child: SizedBox(
+                    height: 120,
+                    child: Column(
+                      children: [
+                        DropdownMenu(
+                          dropdownMenuEntries: _model.dates
+                              .map((day) => DropdownMenuEntry(
+                                    label: day,
+                                    value: day,
+                                  ))
+                              .toList(),
+                          onSelected: (value) {
+                            setState(() {
+                              _model.selectedDate = value!;
+                            });
+                          },
+                          initialSelection: _model.dates[widget.student.dateSelected - 1],
+                        ),
+                        SizedBox(height: 20,),
+                        CustomButton(
+                            loading: _model.loading, onPressed: update, title: 'Update')
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
-            CustomButton(
-                loading: _model.loading, onPressed: update, title: 'Update')
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
