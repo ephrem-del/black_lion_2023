@@ -28,8 +28,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
     setState(() {
       _model.loading = true;
     });
-    final result =
-        await _model.update(_model.selectedDate);
+    final result = await _model.update(_model.selectedDate);
     if (result) {
       setState(() {
         _model.loading = false;
@@ -39,16 +38,35 @@ class _UpdateScreenState extends State<UpdateScreen> {
       setState(() {
         _model.loading = false;
       });
+      showErrorDialog();
     }
+  }
+
+  showErrorDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('error'),
+            content: Text(_model.errorText),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Stack(
         children: [
-          BackgroundImage(),
+          BackgroundImage(image: 1),
           SafeArea(
             child: Align(
               alignment: Alignment.topCenter,
@@ -62,7 +80,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                         DropdownMenu(
                           dropdownMenuEntries: _model.dates
                               .map((day) => DropdownMenuEntry(
-                                    label: day,
+                                    label: _model.returnDateNames(day),
                                     value: day,
                                   ))
                               .toList(),
@@ -71,11 +89,16 @@ class _UpdateScreenState extends State<UpdateScreen> {
                               _model.selectedDate = value!;
                             });
                           },
-                          initialSelection: _model.dates[widget.student.dateSelected - 1],
+                          initialSelection:
+                              _model.dates[widget.student.dateSelected - 1],
                         ),
-                        SizedBox(height: 20,),
+                        SizedBox(
+                          height: 20,
+                        ),
                         CustomButton(
-                            loading: _model.loading, onPressed: update, title: 'Update')
+                            loading: _model.loading,
+                            onPressed: update,
+                            title: 'Update')
                       ],
                     ),
                   ),

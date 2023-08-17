@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/students.dart';
 import '../admin_screen/admin_screen.dart';
+import '../login_screen/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final Student student;
@@ -30,6 +32,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   update() {
     Get.to(() => UpdateScreen(student: widget.student));
+  }
+
+  logout() async {
+    showDialog(context: context,builder: (context) {
+      return AlertDialog(
+        title: Text('Logout'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),),
+              TextButton(onPressed: ()async{
+                
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    Get.off(() => LoginScreen());
+              }, child: Text('Logout'))
+        ],
+      );
+    });
   }
 
   adminLogin(context) {
@@ -58,7 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   adminScreen() {
     // if (passwordController.text == '1234') {
-      Get.to(() => AdminScreen());
+    Navigator.pop(context);
+    passwordController.clear();
+    Get.to(() => AdminScreen());
     // } else {
     //   Navigator.pop(context);
     // }
@@ -69,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          BackgroundImage(),
+          BackgroundImage(image: 1),
           SafeArea(
             child: Align(
               alignment: Alignment.topCenter,
@@ -92,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 10,
                         ),
                         Text(
-                          'You\'ve selected ${widget.student.dateSelected} for your photoshoot',
+                          'You\'ve selected ${_model.returnDateNames(widget.student.dateSelected)} for your photoshoot',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
@@ -117,12 +142,72 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: Alignment.bottomCenter,
                 child: CustomButton(
                   loading: false,
-                  onPressed: adminScreen,
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: ((context) {
+                          return AlertDialog(
+                            title: Text('Enter password'),
+                            content: TextFormField(
+                              controller: passwordController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                child: Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    if (passwordController.text == '13572468') {
+                                      adminScreen();
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  child: Text('ok'))
+                            ],
+                          );
+                        }));
+                  },
+                  // onPressed: adminScreen,
                   title: 'Admin Login',
                 ),
               ),
             ),
           ),
+          SafeArea(
+            child: Align(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 25, 60),
+                child: IconButton(
+                  onPressed: logout,
+                  iconSize: 100,
+                  icon: Row(
+                    children: [
+                      Text('Logout', style: TextStyle(fontSize: 20,),),
+                      SizedBox(width: 5,),
+                      Icon(
+                        Icons.logout,
+                        size: 25,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              alignment: Alignment.bottomRight,
+            ),
+          )
         ],
       ),
     );

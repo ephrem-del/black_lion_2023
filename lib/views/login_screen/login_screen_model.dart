@@ -26,9 +26,8 @@ class LoginScreenModel {
       final snapshot = await db
           .collection('students')
           .doc(email)
-          .get(GetOptions(source: Source.server));
+          .get();
       if (snapshot.exists) {
-        final student = Student.fromMap(snapshot);
         await prefs.setString('email', email);
         await prefs.setBool('isLoggedIn', true);
         return true;
@@ -42,6 +41,13 @@ class LoginScreenModel {
       logger.e('error: $e');
       return false;
     }
+  }
+
+    Future<Student> getStudent(String email) async {
+    final db = FirebaseFirestore.instance;
+    final result = await db.collection('students').doc(email).get();
+    final Student student = Student.fromMap(result);
+    return student;
   }
 
   Future<bool> login() async {

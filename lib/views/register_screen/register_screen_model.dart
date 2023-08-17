@@ -28,6 +28,24 @@ class RegisterScreenModel {
     'Day 4',
   ];
 
+  List<String> dateNames = [
+    'Aug 25',
+    'Aug 26',
+    'Sep 2',
+    'Sep 3',
+  ];
+
+  returnDateNames(day) {
+    if (day == 'Day 1') {
+      return dateNames[0];
+    } else if (day == 'Day 2') {
+      return dateNames[1];
+    } else if (day == 'Day 3') {
+      return dateNames[2];
+    } else
+      return dateNames[3];
+  }
+
   int selectedDateToInt(String date) {
     if (date == 'Day 1') {
       return 1;
@@ -79,7 +97,7 @@ class RegisterScreenModel {
         return false;
       }
     } else {
-      errorText = 'Date already full';
+      errorText = 'Date already full try a different date';
       return false;
     }
   }
@@ -89,7 +107,7 @@ class RegisterScreenModel {
         await db.collection('dates').doc(documentName(selectedDate)).get();
     final registered = snapshot['registered'];
     logger.i('registered on $selectedDate: $registered');
-    if (registered < 40) {
+    if (registered < 60) {
       await db
           .collection('dates')
           .doc(documentName(selectedDate))

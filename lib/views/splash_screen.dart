@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   navigateToLoginScreen() {
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 4), () {
       Get.off(
         () => LoginScreen(),
       );
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   navigateToHomeScreen(Student student) {
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 4), () {
       Get.off(
         () => HomeScreen(
           student: student,
@@ -83,9 +83,55 @@ class _SplashScreenState extends State<SplashScreen> {
               fit: BoxFit.fill,
             ),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
+            
             CircularProgressIndicator(),
+            SizedBox(height: 40),
+            Text('Developed by'),
+            SizedBox(height: 10,),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 80,
+                  fit: BoxFit.fitHeight,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'DEMAKK ADVERTISING',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text('AND DIGITAL SOLUTIONS',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),),
+                  ],
+                ),
+                SizedBox(height: 20,),
+                Text('0925565768',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),),
+                Text('0922493805',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),),
+              ],
+            )
+            // CircularProgressIndicator(),
           ],
         ),
       ),
