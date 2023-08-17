@@ -29,7 +29,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
       _model.loading = true;
     });
     final result =
-        await _model.update(_model.dates[widget.student.dateSelected - 1]);
+        await _model.update(_model.selectedDate);
     if (result) {
       setState(() {
         _model.loading = false;

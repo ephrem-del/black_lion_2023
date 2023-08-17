@@ -49,10 +49,10 @@ class UpdateScreenModel {
     final registered = snapshot['registered'];
     logger.i('registered on $selectedDate: $registered');
     if (registered < 40) {
-      await db
-          .collection('dates')
-          .doc(documentName(selectedDate))
-          .update({'registered': registered + 1});
+      // await db
+      //     .collection('dates')
+      //     .doc(documentName(selectedDate))
+      //     .update({'registered': registered + 1});
       return true;
     } else {
       return false;
@@ -61,8 +61,11 @@ class UpdateScreenModel {
 
   Future<bool> update(String sselectedDate) async {
     selectedDate = sselectedDate;
-    final day1DocName = documentName(dates[student.dateSelected-1]);
+    print('selectedDate: $selectedDate');
+    final day1DocName = documentName(dates[student.dateSelected - 1]);
     final day2DocName = documentName(selectedDate);
+    print('doc1Name: $day1DocName');
+    print('doc2Name: $day2DocName');
     final isUpdatePossible = await _updateDates();
     if (isUpdatePossible) {
       try {
@@ -72,8 +75,13 @@ class UpdateScreenModel {
             await db.collection('dates').doc(day2DocName).get();
         final registered1 = registered1Snapshot['registered'];
         final registered2 = registered2Snapshot['registered'];
+        print('before update 1: $registered1');
+        print('before update 2: $registered2');
         final dt1 = registered1 - 1;
         final dt2 = registered2 + 1;
+        if (day1DocName == day2DocName) {
+          return true;
+        }
         await db.collection('dates').doc(day1DocName).set({'registered': dt1});
         await db.collection('dates').doc(day2DocName).set({'registered': dt2});
 
