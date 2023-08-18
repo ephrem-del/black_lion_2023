@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="black_lion_2023"
+        android:label="Black Lion 2023"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
