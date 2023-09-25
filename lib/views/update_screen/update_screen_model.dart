@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/students.dart';
 import '../../service/logger.dart';
+import '../../utils/days.dart';
 
 class UpdateScreenModel {
   Student student;
@@ -19,10 +20,10 @@ class UpdateScreenModel {
   ];
 
     List<String> dateNames = [
-    'Aug 25',
-    'Aug 26',
-    'Sep 2',
-    'Sep 3',
+    XDays.day1,
+    XDays.day2,
+    XDays.day3,
+    XDays.day4,
   ];
 
   returnDateNames(day) {
@@ -32,8 +33,8 @@ class UpdateScreenModel {
       return dateNames[1];
     } else if (day == 'Day 3') {
       return dateNames[2];
-    } else
-      return dateNames[3];
+    } else{
+      return dateNames[3];}
   }
 
   String documentName(String date) {
@@ -67,10 +68,6 @@ class UpdateScreenModel {
     final registered = snapshot['registered'];
     logger.i('registered on $selectedDate: $registered');
     if (registered < 60) {
-      // await db
-      //     .collection('dates')
-      //     .doc(documentName(selectedDate))
-      //     .update({'registered': registered + 1});
       return true;
     } else {
       return false;
@@ -79,11 +76,11 @@ class UpdateScreenModel {
 
   Future<bool> update(String sselectedDate) async {
     selectedDate = sselectedDate;
-    print('selectedDate: $selectedDate');
+    logger.i('selectedDate: $selectedDate');
     final day1DocName = documentName(dates[student.dateSelected - 1]);
     final day2DocName = documentName(selectedDate);
-    print('doc1Name: $day1DocName');
-    print('doc2Name: $day2DocName');
+    logger.i('doc1Name: $day1DocName');
+    logger.i('doc2Name: $day2DocName');
     final isUpdatePossible = await _updateDates();
     if (isUpdatePossible) {
       try {
@@ -93,8 +90,8 @@ class UpdateScreenModel {
             await db.collection('dates').doc(day2DocName).get();
         final registered1 = registered1Snapshot['registered'];
         final registered2 = registered2Snapshot['registered'];
-        print('before update 1: $registered1');
-        print('before update 2: $registered2');
+        logger.i('before update 1: $registered1');
+        logger.i('before update 2: $registered2');
         final dt1 = registered1 - 1;
         final dt2 = registered2 + 1;
         if (day1DocName == day2DocName) {

@@ -80,7 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   adminScreen() {
-    // if (passwordController.text == '1234') {
     Navigator.pop(context);
     passwordController.clear();
     Get.to(() => AdminScreen());

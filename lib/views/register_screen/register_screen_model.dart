@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../service/logger.dart';
+import '../../utils/days.dart';
 
 class RegisterScreenModel {
   final String email;
@@ -29,10 +30,10 @@ class RegisterScreenModel {
   ];
 
   List<String> dateNames = [
-    'Aug 25',
-    'Aug 26',
-    'Sep 2',
-    'Sep 3',
+    XDays.day1,
+    XDays.day2,
+    XDays.day3,
+    XDays.day4,
   ];
 
   returnDateNames(day) {

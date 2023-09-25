@@ -38,16 +38,26 @@ class _SplashScreenState extends State<SplashScreen> {
         navigateToLoginScreen();
       } else {
         final student = await getStudent(email);
+        if (student == null) {
+          navigateToLoginScreen();
+          return;
+        }
         navigateToHomeScreen(student);
       }
     }
   }
 
-  Future<Student> getStudent(String email) async {
-    final db = FirebaseFirestore.instance;
-    final result = await db.collection('students').doc(email).get();
-    final Student student = Student.fromMap(result);
-    return student;
+  Future<Student?> getStudent(String email) async {
+    try {
+      final db = FirebaseFirestore.instance;
+      var result = await db.collection('students').doc(email).get();
+      if (!result.exists) return null;
+      final Student student = Student.fromMap(result);
+      
+      return student;
+    } on FirebaseException {
+      return null;
+    }
   }
 
   navigateToLoginScreen() {
@@ -85,11 +95,13 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: 20,
             ),
-            
+
             CircularProgressIndicator(),
             SizedBox(height: 40),
             Text('Developed by'),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -111,24 +123,32 @@ class _SplashScreenState extends State<SplashScreen> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Text('AND DIGITAL SOLUTIONS',
+                    Text(
+                      'AND DIGITAL SOLUTIONS',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                      ),),
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 20,),
-                Text('0925565768',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),),
-                Text('0922493805',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  '0925565768',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  '0922493805',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             )
             // CircularProgressIndicator(),
